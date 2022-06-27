@@ -1,0 +1,55 @@
+body {
+  height: 100%;
+  letter-spacing: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  text-size-adjust: 100%;
+  color-scheme: light;
+}
+
+#__next {
+  height: 100vh;
+  position: relative;
+}
+
+
+.hasVideo .grid-overwrites {
+  flex-grow: 1 !important;
+  max-width: inherit !important;
+}
+
+.showVideo {
+  max-width: 100% !important;
+  flex-basis: 100% !important;
+  height: 52vh;
+}
+
+.multiaction-area-card button:first-child {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.multiaction-area-card img {
+  min-height: 20%;
+}
+
+@media (max-width: 680px) {
+  .page-header {
+    flex-wrap: wrap;
+  }
+
+  .page-header > * {
+    width: 100%;
+  }
+
+  .page-header > p {
+    text-align: left;
+  }
+
+  .page-header > .filter-panel {
+    justify-content: space-between;
+  }
+} 
