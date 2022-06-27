@@ -39,12 +39,18 @@ export default async function handler(req, res) {
       )
 
       await playLists?.items?.forEach((x: any, index: number) => {
-        playListMap.set(x.snippet.title, x.id)
+        playListMap.set(x.snippet.title.toLowerCase().replace(/ /g, '-'), x.id)
       })
     }
 
+    const currentPathName = new URL(
+      `https://test.com${req.url}`
+    )?.searchParams?.get('pathname')
+
     const ytPlayItemsApiUrl = await getYouTubeApiUrl('playlistItems', {
-      playlistId: playListMap.values().next().value,
+      playlistId:
+        playListMap.get(currentPathName.slice(1)) ||
+        playListMap.values().next().value,
     })
 
     const results = await fetch(ytPlayItemsApiUrl, { method: 'GET' })
@@ -56,6 +62,9 @@ export default async function handler(req, res) {
         })
       })
 
-    res.send(results)
+    res.send({
+      title: currentPathName.slice(1),
+      results,
+    })
   }
 }
