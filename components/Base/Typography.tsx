@@ -13,6 +13,7 @@ function PrimaryHeading(props: IHeadingProps) {
         fontSize="6vh"
         fontFamily="inherit"
         fontWeight={900}
+        minHeight={100}
       >
         {props?.text || ''}
       </Typography>
