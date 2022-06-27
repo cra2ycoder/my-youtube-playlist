@@ -32,24 +32,19 @@ const getYouTubeApiUrl = function (apiName: string, qp: any = {}) {
 export default async function handler(req, res) {
   if (req.method === 'GET' && !req.url.includes('favicon.ico')) {
     const ytPlayListApiUrl = getYouTubeApiUrl('playlists')
-    let defaultPlayListTitle = ''
 
     if (playListMap.size === 0) {
       const playLists = await fetch(ytPlayListApiUrl, { method: 'GET' }).then(
         x => x.json()
       )
 
-      playLists?.items?.forEach((x: any, index: number) => {
-        if (index === 1) {
-          defaultPlayListTitle = x.snippet.title
-        }
-
+      await playLists?.items?.forEach((x: any, index: number) => {
         playListMap.set(x.snippet.title, x.id)
       })
     }
 
-    const ytPlayItemsApiUrl = getYouTubeApiUrl('playlistItems', {
-      playlistId: playListMap.get(defaultPlayListTitle),
+    const ytPlayItemsApiUrl = await getYouTubeApiUrl('playlistItems', {
+      playlistId: playListMap.values().next().value,
     })
 
     const results = await fetch(ytPlayItemsApiUrl, { method: 'GET' })
