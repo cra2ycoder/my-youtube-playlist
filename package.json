@@ -1,0 +1,38 @@
+{
+  "name": "my-youtube-playlist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.3.1",
+    "next": "12.1.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "swr": "1.2.0",
+    "dotenv": "16.0.1",
+    "react-lazy-load-image-component": "1.5.4"
+  },
+  "devDependencies": {
+    "prettier": "2.5.1",
+    "typescript": "4.5.5",
+    "@types/node": "18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://cra2ycoder@github.com/cra2ycoder/favourite-cookings.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cra2ycoder/favourite-cookings/issues"
+  },
+  "homepage": "https://github.com/cra2ycoder/favourite-cookings#readme"
+}
