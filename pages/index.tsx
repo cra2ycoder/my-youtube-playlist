@@ -11,17 +11,15 @@ import Typography from '@mui/material/Typography'
 import {
   fetcher,
   filterDataByMap,
-  getRecipeFilters,
-  getChefFilters,
-  setChefMapByData,
-  recipeMap,
-  chefMap,
+  getFilters,
+  setMapByData,
+  filterMap,
 } from '@utils/index'
 
 function Index() {
   const { data = {}, error = {} } = useSwr('/api/home', fetcher)
 
-  const [recipeList, setRecipeList] = useState([])
+  const [playList, setPlayList] = useState([])
   const [activeVideoCard, setActiveVideoCard] = useState(-1)
   const [activeFilter, setActiveFilter] = useState('')
 
@@ -29,48 +27,30 @@ function Index() {
     // console.log({ curFilter })
     const filteredList = filterDataByMap(
       curFilter,
-      recipeMap,
-      data.items,
-      'title'
-    )
-    // console.log(filteredList, curFilter, `${filterLabel}|${curFilter}`)
-    setActiveFilter(`${filterLabel}|${curFilter}`)
-    setRecipeList([...filteredList])
-  }
-
-  const onChefFilterChange = function (curFilter, filterLabel) {
-    // console.log({ curFilter })
-    const filteredList = filterDataByMap(
-      curFilter,
-      chefMap,
+      filterMap,
       data.items,
       'videoOwnerChannelTitle'
     )
     console.log(filteredList)
     setActiveFilter(`${filterLabel}|${curFilter}`)
-    setRecipeList([...filteredList])
+    setPlayList([...filteredList])
   }
 
   const filters = [
     {
       label: 'Filter By Channel',
-      list: getChefFilters() || [],
-      onFilterChange: onChefFilterChange,
-    },
-    {
-      label: 'Filter By Recipe Category',
-      list: getRecipeFilters() || [],
-      onFilterChange: onFilterChange,
+      list: getFilters() || [],
+      onFilterChange,
     },
   ]
 
   useEffect(() => {
     if (Object.keys(data).length) {
       // setting data to the list
-      setRecipeList(data?.items || [])
+      setPlayList(data?.items || [])
 
       // set chef map
-      setChefMapByData(data?.items)
+      setMapByData(data?.items)
 
       setActiveFilter(`${filters[filters.length - 1].label}|All`)
     }
@@ -78,7 +58,7 @@ function Index() {
 
   return (
     <Container maxWidth="lg">
-      <PrimaryHeading text="Favorite Recipes" />
+      <PrimaryHeading text="Youtube PlayList" />
       <Box
         className="page-header"
         sx={{
@@ -88,7 +68,7 @@ function Index() {
         }}
       >
         <Typography align="center" fontSize={'3vh'} fontWeight={700}>
-          Total: {recipeList.length}
+          Total: {playList.length}
         </Typography>
         <Box className="filter-panel" sx={{ display: 'flex' }}>
           {filters?.map((x, id) => (
@@ -121,7 +101,7 @@ function Index() {
           </Box>
         )}
         <Grid container spacing={3}>
-          {recipeList.length === 0 && (
+          {playList.length === 0 && (
             <Box
               sx={{
                 display: 'flex',
@@ -134,7 +114,7 @@ function Index() {
               <Typography>There are no recipes to display!</Typography>
             </Box>
           )}
-          {recipeList.map((x, i) => (
+          {playList.map((x, i) => (
             <Grid
               item
               sm={6}
