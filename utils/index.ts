@@ -1,41 +1,22 @@
 export const fetcher = url => fetch(url).then(res => res.json())
 
-export const recipeMap = new Map()
-recipeMap.set('All', [])
-recipeMap.set('Veg Biryani', ['vegetable', 'biryani'])
-recipeMap.set('Non-Veg Biryani', ['mutton', 'chicken', 'egg', 'biryani'])
-recipeMap.set('Veg Gravy', ['mushroom', 'gravy'])
-recipeMap.set('Non-Veg Gravy', ['chicken', 'gravy'])
-recipeMap.set('Sweet', ['sweet'])
-recipeMap.set('Poriyal', ['kootu', 'poriyal'])
-recipeMap.set('Kuzhambu', ['kulambu', 'curry', 'sambar', 'kuzhambu'])
-recipeMap.set('Rasam', ['rasam'])
-recipeMap.set('Dry', ['dry'])
-recipeMap.set('Fry', ['fry'])
+export const playListMap = new Map()
 
-export const chefMap = new Map()
-chefMap.set('All', [])
+export const filterMap = new Map()
+filterMap.set('All', [])
 
-export const getRecipeFilters = () => {
-  let arr = []
-  recipeMap.forEach((value, key) => {
-    arr.push(key)
-  })
-  return arr
-}
-
-export const setChefMapByData = (list = []) => {
+export const setMapByData = (list = []) => {
   list.forEach(x => {
     let title = x?.snippet?.videoOwnerChannelTitle
     if (title) {
-      chefMap.set(title, [title])
+      filterMap.set(title, [title])
     }
   })
 }
 
-export const getChefFilters = () => {
+export const getFilters = () => {
   let arr = []
-  chefMap.forEach((value, key) => {
+  filterMap.forEach((value, key) => {
     arr.push(key)
   })
   return arr
