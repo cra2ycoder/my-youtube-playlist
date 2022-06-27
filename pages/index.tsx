@@ -16,8 +16,11 @@ import {
   filterMap,
 } from '@utils/index'
 
-function Index() {
-  const { data = {}, error = {} } = useSwr('/api/home', fetcher)
+function Index({ asPath }) {
+  const { data = {}, error = {} } = useSwr(
+    `/api/home?pathname=${asPath}`,
+    fetcher
+  )
 
   const [playList, setPlayList] = useState([])
   const [activeVideoCard, setActiveVideoCard] = useState(-1)
@@ -28,7 +31,7 @@ function Index() {
     const filteredList = filterDataByMap(
       curFilter,
       filterMap,
-      data.items,
+      data?.results?.items,
       'videoOwnerChannelTitle'
     )
     console.log(filteredList)
@@ -47,10 +50,10 @@ function Index() {
   useEffect(() => {
     if (Object.keys(data).length) {
       // setting data to the list
-      setPlayList(data?.items || [])
+      setPlayList(data?.results?.items || [])
 
-      // set chef map
-      setMapByData(data?.items)
+      // set dynamic map
+      setMapByData(data?.results?.items)
 
       setActiveFilter(`${filters[filters.length - 1].label}|All`)
     }
@@ -58,7 +61,7 @@ function Index() {
 
   return (
     <Container maxWidth="lg">
-      <PrimaryHeading text="Youtube PlayList" />
+      <PrimaryHeading text={data?.title || ''} />
       <Box
         className="page-header"
         sx={{
